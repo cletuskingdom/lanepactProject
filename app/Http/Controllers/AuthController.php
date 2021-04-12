@@ -33,4 +33,18 @@ class AuthController extends Controller
 	        return response()->json('Something went wrong on the server.', $e->getCode());
 	    }
 	}
+
+	public function login(Request $req)
+	{
+		$req->validate([
+			'name' => "required|string|max:255",
+			'email' => "required|string|email|max:255|unique:users",
+			'password' => "required|string|min:6"
+		]);
+		User::create([
+            'name' => $req->name,
+            'email' => $req->email,
+            'password' => Hash::make($req->password),
+        ]);
+	}
 }
