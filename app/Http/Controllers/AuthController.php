@@ -13,11 +13,11 @@ class AuthController extends Controller
 	{
 		$http = new \GuzzleHttp\Client;
 	    try {
-	        $response = $http->post('http://127.0.0.1:8000/oauth/token', [
+	        $response = $http->post(config('service.passport.login_endpoint'), [
 	            'form_params' => [
 	                'grant_type' => 'password',
-	                'client_id' => 2,
-	                'client_secret' => 'vvKM1NahBNa5KLUjXMvpvzTwZ9Xb4EZh5TZvEx1p',
+	                'client_id' => config('service.passport.client_id'),
+	                'client_secret' => config('service.passport.client_secret'),
 	                'username' => $req->username,
 	                'password' => $req->password,
 	            ]
