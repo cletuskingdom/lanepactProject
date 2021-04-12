@@ -34,7 +34,7 @@ class AuthController extends Controller
 	    }
 	}
 
-	public function login(Request $req)
+	public function register(Request $req)
 	{
 		$req->validate([
 			'name' => "required|string|max:255",
@@ -46,5 +46,13 @@ class AuthController extends Controller
             'email' => $req->email,
             'password' => Hash::make($req->password),
         ]);
+	}
+
+	public function logout(Request $req)
+	{
+		auth()->user()->tokens->each(function ($token, $key){
+			$token->delete();
+		})
+		return response()->json('Logged out successfully.', 200)
 	}
 }
